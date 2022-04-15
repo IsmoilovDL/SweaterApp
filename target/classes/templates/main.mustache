@@ -4,11 +4,17 @@
     <form method="post">
         <input type="text" name="text" placeholder="Введите сообщения">
         <input type="text" name="tag" placeholder="Введите тег">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}">
         <input type="submit" value="Отправить!">
     </form>
 </div>
 <div>
     Cписок сообщения
+    <form method="post" action="filter">
+        <input type="text" name="filter">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+        <input type="submit" value="Фильтр">
+    </form>
     {{#messages}}
     <div>
        <b>{{id}}</b>
@@ -17,5 +23,10 @@
     </div>
     {{/messages}}
 </div>
+
+<form action="/logout" method="post">
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+    <input type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>
