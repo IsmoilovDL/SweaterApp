@@ -1,42 +1,54 @@
 <#import "parts/common.ftlh" as c>
-<#import "parts/login.ftlh" as l>
 <@c.page>
-    <div>
-        <@l.logout/>
-    </div>
-    <div>
-        <a href="/user">User list</a>
-    </div>
-<div>
-    <form method="post" enctype="multipart/form-data">
-        <input type="text" name="text" placeholder="Введите сообщения">
-        <input type="text" name="tag" placeholder="Введите тег">
-        <input type="file" name="file">
-        <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <input type="submit" value="Отправить!">
+
+<div class="mb-5">
+    <form method="get" action="/main" >
+        <div class="form-inline">
+            <label for="search">Search by tag</label>
+            <input id="search" type="text" class="form-control col-md-5" name="filter" value="${filter?ifExists}">
+            <input type="submit" class="btn btn-primary ml-3" value="Фильтр">
+        </div>
     </form>
 </div>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Add new message
+    </a>
+    <div class="collapse" id="collapseExample">
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="Message">Message</label>
+                <input id="Message" type="text" name="text" class="form-control col-md-5"  placeholder="Введите сообщения">
+                <label for="Tag">Tag</label>
+                <input type="text" id="Tag" name="tag" class="form-control col-md-5" placeholder="Введите тег">
+            </div>
+            <div class="form-group">
+                <label for="image">Download image</label>
+                <input type="file" id="image" name="file">
+            </div>
+            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <input type="submit" class="btn btn-primary" value="Отправить!">
+        </form>
+    </div>
 <div>
-    Cписок сообщения
-    <form method="get" action="/main">
-        <input type="text" name="filter" value="${filter?ifExists}">
-        <input type="submit" value="Фильтр">
-    </form>
+
+<div class="card-columns">
    <#list messages as message>
-    <div>
-       <b>${message.id}</b>
-        ${message.text}
-        <i>${message.tag}</i>
-        <strong>${message.authorName}</strong>
-        <div>
+    <div class="card my-3" style="width: 18rem;">
             <#if message.filename??>
-                <img src="/img/${message.filename}">
+                <img class="card-img-top" src="/img/${message.filename}">
             </#if>
-        </div>
+            <div class="m-2">
+                ${message.text}
+                <i>${message.tag}</i>
+            </div>
+            <div class="card-footer text-muted">
+                <strong>${message.authorName}</strong>
+            </div>
     </div>
     <#else>
     No messages
     </#list>>
+</div>
 </div>
 
 
