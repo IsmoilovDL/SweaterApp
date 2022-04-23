@@ -22,7 +22,7 @@ public class UserService implements UserDetailsService {
     private MailSender mailSender;
 
     public boolean activateUser(String code) {
-       User user= userRepo.findByActivationCode(code);
+       User user= userRepo.findByActiveCode(code);
        if(user==null){
            return false;
        }
@@ -52,7 +52,8 @@ public class UserService implements UserDetailsService {
             String message=String.format("Hello, %s\n" +
                     "Welcome to Sweater! Please visit next link: localhost:8080/activate/%s",
                     user.getUsername(), user.getActiveCode());
-                mailSender.send(user.getEmail(), "Activation code", message);
+            System.out.println(message);
+//                mailSender.send(user.getEmail(), "Activation code", message);
         }
         return true;
     }
