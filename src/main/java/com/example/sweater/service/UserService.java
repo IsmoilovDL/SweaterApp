@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.Collections;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -56,5 +56,43 @@ public class UserService implements UserDetailsService {
 //                mailSender.send(user.getEmail(), "Activation code", message);
         }
         return true;
+    }
+
+    public List<User> findAll() {
+        return userRepo.findAll();
+    }
+
+    public void userSave(User user, String username, Map<String, String> form) {
+        user.setUsername(username);
+        Set<String> roles=  Arrays.stream(Role.values())
+                .map(Role::name)
+                .collect(Collectors.toSet());
+
+        user.getRoles().clear();
+
+        for (String key:form.keySet()){
+            if(roles.contains(key)){
+                user.getRoles().add(Role.valueOf(key));
+            }
+        }
+        userRepo.save(user);
+    }
+
+    public void updataProfile(User user, String password, String email) {
+        String userEmail=user.getEmail();
+        boolean emailChange=
+        (email!=null && !email.equals(userEmail)) || (userEmail!=null && !userEmail.equals(email));
+
+        if(emailChange){
+            user.setEmail(email);
+            if(!StringUtils.isEmpty(email)){
+                user.setActiveCode(UUID.randomUUID().toString());
+            }
+        }
+
+        if(!StringUtils.isEmpty(password)){
+            user.setPassword(password);
+        }
+        userRepo.save(user);
     }
 }
