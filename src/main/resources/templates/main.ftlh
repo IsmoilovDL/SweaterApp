@@ -17,7 +17,13 @@
         <form method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="Message">Message</label>
-                <input id="Message" type="text" name="text" class="form-control col-md-5"  placeholder="Введите сообщения">
+                <input id="Message" type="text" name="text" class="form-control col-md-5 ${(textError??)?string('is-invalid','')}"
+                      value="<#if message??>${message.text}</#if>" placeholder="Введите сообщения">
+                <#if textError??>
+                    <div class="invalid-feedback">
+                        ${textError}
+                    </div>
+                </#if>
                 <label for="Tag">Tag</label>
                 <input type="text" id="Tag" name="tag" class="form-control col-md-5" placeholder="Введите тег">
             </div>
