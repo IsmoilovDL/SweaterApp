@@ -22,9 +22,7 @@ public class User implements UserDetails {
     @NotBlank(message = "Password can't be empty")
     private String password;
 
-    @Transient
-    @NotBlank(message = "Password2 can't be empty")
-    private String password2;
+
 
     private boolean active;
 
@@ -125,11 +123,5 @@ public class User implements UserDetails {
         this.activeCode = activeCode;
     }
 
-    public String getPassword2() {
-        return password2;
-    }
 
-    public void setPassword2(String password2) {
-        this.password2 = password2;
-    }
 }
