@@ -61,7 +61,6 @@ public class UserService implements UserDetailsService {
             String message=String.format("Hello, %s\n" +
                     "Welcome to Sweater! Please visit next link: localhost:8080/activate/%s",
                     user.getUsername(), user.getActiveCode());
-            System.out.println(message);
 //                mailSender.send(user.getEmail(), "Activation code", message);
         }
         return true;
