@@ -16,14 +16,14 @@
         </div>
         <div class="card-footer text-muted container">
             <div class="row">
-                <a class="col align-self-center" href="/user-messages/${message.author.id}">${message.authorName}</a>
+                <a class="col align-self-center" href="/user-messages/${message.author.id}">${message.author.username}</a>
                 <a class="col align-self-center" href="#">
-                    <#if true>
+                    <#if message.meLiked>
                     <i class="far fa-heart"></i>
                     <#else>
                     <i class="fas fa-heart"></i>
                     </#if>
-
+                    ${message.likes}
                 </a>
                 <#if message.author.id==currantUserID>
                     <a class="col btn btn-primary" href="/user-messages/${message.author.id}?message=${message.id}">

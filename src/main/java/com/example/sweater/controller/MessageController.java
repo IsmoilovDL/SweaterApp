@@ -2,6 +2,7 @@ package com.example.sweater.controller;
 
 import com.example.sweater.domain.Message;
 import com.example.sweater.domain.User;
+import com.example.sweater.domain.dto.MessageDTO;
 import com.example.sweater.repositories.MessageRepo;
 import com.example.sweater.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +50,11 @@ public class MessageController {
     public String main(
                @RequestParam(required = false, defaultValue = "") String filter,
                Model model,
-              @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+              @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
+               @AuthenticationPrincipal User user
     ){
 
-        Page<Message> page=messageService.messageList(pageable,filter);
+        Page<MessageDTO> page=messageService.messageList(pageable,filter, user);
 
         model.addAttribute("page", page);
         model.addAttribute("url", "/main");
@@ -113,7 +115,7 @@ public class MessageController {
                                @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ){
 
-        Page<Message> page =messageService.messageListForUser(pageable, currantUser, author);
+        Page<MessageDTO> page =messageService.messageListForUser(pageable, currantUser, author);
 
         model.addAttribute("userChannel", author);
         model.addAttribute("subscriptionsCount", author.getSubscriptions().size());
