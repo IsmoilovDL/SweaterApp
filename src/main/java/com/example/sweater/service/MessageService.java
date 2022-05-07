@@ -16,10 +16,6 @@ public class MessageService {
     @Autowired
     private MessageRepo messageRepo;
 
-    @Autowired
-    private EntityManager em;
-
-
     public Page<MessageDTO> messageList(Pageable pageable, String filter, User user){
         if(filter!=null && !filter.isEmpty()) {
             return messageRepo.findByTag(filter, pageable, user);

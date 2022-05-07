@@ -23,7 +23,7 @@ public class MessageDTO {
         this.meLiked = meLiked;
     }
 
-    public String getAuthorNAme(){
+    public String getAuthorName(){
         return MessageHelper.getAuthorName(author);
     }
 
